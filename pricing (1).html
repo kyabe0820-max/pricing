@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>料金表 | 動画編集サービス</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060912;
+    --surface: #0d1526;
+    --surface2: #111d35;
+    --accent: #00c8ff;
+    --accent2: #7b2fff;
+    --gold: #ffd700;
+    --text: #e8f0fe;
+    --text-muted: #7a8aaa;
+    --border: rgba(0, 200, 255, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,200,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,200,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding: 80px 20px 60px;
+    position: relative;
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, rgba(0,200,255,0.15), rgba(123,47,255,0.15));
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 6px 20px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 10vw, 96px);
+    letter-spacing: 4px;
+    line-height: 1;
+    background: linear-gradient(135deg, #ffffff 0%, var(--accent) 50%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+
+  .header-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+  }
+
+  /* Glow line */
+  .glow-line {
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    margin: 30px auto;
+  }
+
+  /* Section title */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .section-title h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--accent);
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Cards */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    margin-bottom: 60px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0, 200, 255, 0.15);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  .card.featured {
+    border-color: rgba(0, 200, 255, 0.4);
+    background: linear-gradient(135deg, var(--surface), var(--surface2));
+  }
+
+  .card.featured::after {
+    content: 'POPULAR';
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 50px;
+  }
+
+  .card-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .card-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .price-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .price-label {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .price-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: var(--accent);
+  }
+
+  .price-value span {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-left: 2px;
+  }
+
+  /* Short video card */
+  .short-card {
+    background: linear-gradient(135deg, var(--surface), rgba(123,47,255,0.15));
+    border-color: rgba(123,47,255,0.3);
+  }
+
+  .short-card::before {
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+  }
+
+  .short-price {
+    text-align: center;
+    padding: 24px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+    margin-top: 16px;
+  }
+
+  .short-price .big-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .short-price .per {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* Notes */
+  .notes {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 60px;
+  }
+
+  .notes ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .notes ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .notes ul li::before {
+    content: '▶';
+    color: var(--accent);
+    font-size: 10px;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+
+  /* CTA */
+  .cta {
+    text-align: center;
+    padding: 60px 20px 80px;
+  }
+
+  .cta h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+  }
+
+  .cta p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 18px 48px;
+    border-radius: 50px;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 30px rgba(0, 200, 255, 0.3);
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 50px rgba(0, 200, 255, 0.5);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card:nth-child(1) { animation-delay: 0.1s; }
+  .card:nth-child(2) { animation-delay: 0.25s; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">PRICE LIST</div>
+  <h1>料金表</h1>
+  <p class="header-sub">動画編集サービス / VIDEO EDITING SERVICE</p>
+  <div class="glow-line"></div>
+</header>
+
+<div class="container">
+
+  <!-- YouTube動画 -->
+  <div class="section-title">
+    <h2>🎬 YouTube動画編集</h2>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card featured">
+      <span class="card-icon">📹</span>
+      <div class="card-title">YouTube 動画編集</div>
+      <p class="card-desc">カット編集・BGM・テロップ・SE・サムネイル相談対応</p>
+      <ul class="price-list">
+        <li class="price-item">
+          <span class="price-label">〜5分</span>
+          <span class="price-value">¥10,000<span>／本</span></span>
+        </li>
+        <li class="price-item">
+          <span class="price-label">〜10分</span>
+          <span class="price-value">¥20,000<span>／本</span></span>
+        </li>
+        <li class="price-item">
+          <span class="price-label">〜15分</span>
+          <span class="price-value">¥30,000<span>／本</span></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ショート動画 -->
+  <div class="section-title">
+    <h2>⚡ ショート動画編集</h2>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card short-card">
+      <span class="card-icon">📱</span>
+      <div class="card-title">ショート動画</div>
+      <p class="card-desc">YouTubeショート・TikTok・Instagramリール対応<br>縦型フォーマット・テロップ・BGM込み</p>
+      <ul class="price-list" style="margin-top:16px;">
+        <li class="price-item">
+          <span class="price-label">〜1分</span>
+          <span class="price-value">¥10,000<span>／本</span></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 注意事項 -->
+  <div class="section-title">
+    <h2>📋 注意事項</h2>
+  </div>
+
+  <div class="notes">
+    <ul>
+      <li>料金はすべて税込み表示です</li>
+      <li>15分以上の動画については別途お見積もりいたします</li>
+      <li>修正は2回まで無料、3回目以降は別途料金が発生します</li>
+      <li>納期は完成尺5分以内でご依頼から5〜7営業日が目安です（内容により変動）</li>
+      <li>まずはお気軽に無料相談からお問い合わせください</li>
+    </ul>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h3>まずは無料相談から</h3>
+    <p>お気軽にご相談ください。最適なプランをご提案します。</p>
+    <a href="https://calendar.app.google/Ux9zo6fRACv44yQm8" class="cta-btn">今すぐ無料相談する »</a>
+  </div>
+
+</div>
+
+</body>
+</html>
